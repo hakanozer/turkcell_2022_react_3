@@ -1,11 +1,17 @@
 import React from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Bilgiler } from '../models/IUser'
 
 function NavBar( item: { user:Bilgiler } ) {
   
+  const navigate = useNavigate()  
   const location = useLocation()
   console.log(location.pathname)
+  const logout = () => {
+    localStorage.removeItem('user')
+    sessionStorage.removeItem('user')
+    navigate('/')
+  }
     
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -30,7 +36,7 @@ function NavBar( item: { user:Bilgiler } ) {
                 <li><a className="dropdown-item" href="#">Action</a></li>
                 <li><a className="dropdown-item" href="#">Another action</a></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li><a className="dropdown-item" role='button' onClick={logout} >Logout</a></li>
             </ul>
             </li>
             <li className="nav-item">

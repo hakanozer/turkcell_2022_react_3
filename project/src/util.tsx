@@ -14,6 +14,10 @@ export const decrypt = ( cipherText:string ) => {
 }
 
 export const userLoginControl = () => {
+    const localString = localStorage.getItem('user')
+    if ( localString ) {
+        sessionStorage.setItem('user', localString)
+    }
     const stBilgiler = sessionStorage.getItem('user')
     if ( stBilgiler ) {
         try {

@@ -8,7 +8,8 @@ function Login() {
   const navigate = useNavigate()  
   const [alertMessage, setAlertMessage] = useState('')  
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')  
+  const [password, setPassword] = useState('')
+  const [remember, setRemember] = useState(false)
   const sendForm = ( evt: React.FormEvent ) => {
     evt.preventDefault()
     setAlertMessage('')
@@ -19,6 +20,9 @@ function Login() {
             const stBilgiler = JSON.stringify(bilgi)
             const encryptBilgiler = encrypt(stBilgiler)
             sessionStorage.setItem('user', encryptBilgiler)
+            if (remember) {
+                localStorage.setItem('user', encryptBilgiler)
+            }
             navigate('/dashboard')
         }else {
             setAlertMessage( user.mesaj )
@@ -51,6 +55,10 @@ function Login() {
                     </div>
                     <div className='mb-3'>
                         <input onChange={(evt) => setPassword(evt.target.value)} required type='password' className='form-control' placeholder='Password'></input>
+                    </div>
+                    <div className='mb-3 form-check'>
+                        <input onChange={(evt) => setRemember(!remember) } type='checkbox' className='form-check-input' id='remember'></input>
+                        <label className='form-check-label' htmlFor='remember'>Remember</label>
                     </div>
                     <button type='submit' className='btn btn-success'>Login</button>
                 </form>
