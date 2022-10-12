@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userLogin } from './service'
+import { encrypt } from './util'
 
 function Login() {
 
@@ -16,7 +17,8 @@ function Login() {
         const bilgi = user.bilgiler
         if ( user.durum && bilgi ) {
             const stBilgiler = JSON.stringify(bilgi)
-            sessionStorage.setItem('user', stBilgiler)
+            const encryptBilgiler = encrypt(stBilgiler)
+            sessionStorage.setItem('user', encryptBilgiler)
             navigate('/dashboard')
         }else {
             setAlertMessage( user.mesaj )
