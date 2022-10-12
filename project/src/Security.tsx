@@ -5,8 +5,7 @@ import { userLoginControl } from './util'
 
 function Security( item: { component: JSX.Element } ) {
 
-  const user = userLoginControl()  
-
+  const user = userLoginControl()    
   return (
     
     user === null

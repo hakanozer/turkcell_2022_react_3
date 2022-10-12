@@ -6,7 +6,7 @@ function NavBar( item: { user:Bilgiler } ) {
   
   const navigate = useNavigate()  
   const location = useLocation()
-  console.log(location.pathname)
+  //console.log(location.pathname)
   const logout = () => {
     localStorage.removeItem('user')
     sessionStorage.removeItem('user')

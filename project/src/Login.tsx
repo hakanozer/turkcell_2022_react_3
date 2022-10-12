@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userLogin } from './service'
-import { encrypt } from './util'
+import { encrypt, userLoginControl } from './util'
 
 function Login() {
 
-  const navigate = useNavigate()  
+  const navigate = useNavigate() 
+  /*
+  useEffect(() => {
+    const user = userLoginControl()
+    if ( user ) {
+    //navigate('/dashboard')
+    window.location.href = '/dashboard'
+    }
+  }, [])
+  */
+
+
+
+   
   const [alertMessage, setAlertMessage] = useState('')  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,7 +47,7 @@ function Login() {
     })
     console.log("this line call");
     
-  }  
+  } 
 
   return (
     <>
