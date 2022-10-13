@@ -4,13 +4,16 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Bilgiler } from '../models/IUser'
 import { order } from '../service'
 import { OrderAction } from '../useRedux/actions/OrderAction'
+import { SearchAction } from '../useRedux/actions/SearchAction'
 import { StateType } from '../useRedux/store'
 import { OrderType } from '../useRedux/types/OrderType'
+import { SearchType } from '../useRedux/types/SearchType'
 
 function NavBar( item: { user:Bilgiler } ) {
 
   // use redux
   const orderSelector = useSelector( (item:StateType) => item.OrderReducer )
+  const searchSelector = useSelector( (item:StateType) => item.SearchReducer )
   const dispatch = useDispatch()
   
   const navigate = useNavigate()  
@@ -42,6 +45,15 @@ function NavBar( item: { user:Bilgiler } ) {
       })
     }
   }, [])
+
+
+  const fncSearch = (txt: string) => {
+    const sendAction:SearchAction = {
+      type: SearchType.SEARCH_CHANGE,
+      payload: txt
+    }
+    dispatch( sendAction )
+  }
   
     
   return (
@@ -78,7 +90,7 @@ function NavBar( item: { user:Bilgiler } ) {
             </li>
         </ul>
         <form className="d-flex" role="search">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <input value={searchSelector} onChange={(evt) => fncSearch(evt.target.value)} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-outline-success" type="submit">Search</button>
         </form>
         </div>
