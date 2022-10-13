@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes ,Route, Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 // import components
 import Dashboard from './Dashboard'
@@ -10,6 +11,7 @@ import { userLoginControl } from './util'
 
 export const router =
 <BrowserRouter>
+    <ToastContainer />
     <Routes>
         <Route path='' element={ userLoginControl() === null ? <Login /> : <Navigate to='/dashboard' /> }></Route>
         <Route path='/dashboard' element={ <Security component={<Dashboard />} /> }></Route>

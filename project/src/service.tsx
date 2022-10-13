@@ -1,6 +1,8 @@
 import axios from "axios";
+import { IBasket } from "./models/IBasket";
 import { IProduct } from "./models/IProduct";
 import { IUser } from "./models/IUser";
+import { userLoginControl } from "./util";
 
 let baseURL = 'https://www.jsonbulut.com/json/'
 let ref = 'd1becef32825e5c8b0fc1b096230400b'
@@ -29,4 +31,19 @@ export const allProduct = () => {
         start: '0'
     }
     return config.get<IProduct>('product.php', { params: sendParams })
+}
+
+
+// add Basket
+export const addBasket = (productId:string) => {
+    const user = userLoginControl()
+    if ( user ) {
+       const sendParam = {
+            customerId: user.userId,
+            productId: productId,
+            html: productId
+       }
+       return config.get<IBasket>('orderForm.php', { params: sendParam })
+    }
+    return null
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { ProBilgiler } from './models/IProduct'
+import { addBasket } from './service'
 
 function ProductDetail() {
   
@@ -22,6 +24,20 @@ function ProductDetail() {
     }
   }, [])
   
+  
+  const fncAddBasket = () => {
+    const basket = addBasket(item!.productId)
+    if ( basket ) {
+        basket.then(res => {
+            const status = res.data.order[0].durum
+            if ( status ) {
+                toast.success('Add Basket Success')
+            }else {
+                toast.error('Basket Fail')
+            }
+        })
+    }
+  }
 
   return (
     <>
@@ -40,7 +56,7 @@ function ProductDetail() {
                     <div className='col-sm-6'>
                         <h2><span className="badge bg-danger"> { item.price }₺ </span></h2>
                         <div dangerouslySetInnerHTML={ {__html: item.description}  }></div>
-                        <button className='btn btn-warning text-light'><i className="bi bi-cart-check"></i> Add Basket</button>
+                        <button onClick={fncAddBasket} className='btn btn-warning text-light'><i className="bi bi-cart-check"></i> Add Basket</button>
                     </div>
                 </div>
             </>
