@@ -26,6 +26,9 @@ function NavBar( item: { user:Bilgiler } ) {
             <NavLink to='/dashboard' className='nav-link' >Dashboard</NavLink>
             </li>
             <li className="nav-item">
+            <NavLink to='/orders' className='nav-link' >Orders</NavLink>
+            </li>
+            <li className="nav-item">
             <NavLink to='/users' className='nav-link' >Users</NavLink>
             </li>
             <li className="nav-item dropdown">
@@ -40,7 +43,7 @@ function NavBar( item: { user:Bilgiler } ) {
             </ul>
             </li>
             <li className="nav-item">
-            <a className="nav-link disabled"> { item.user.userName } { item.user.userSurname } </a>
+            <a className="nav-link disabled"> { item.user.userName } { item.user.userSurname } ( 0 ) </a>
             </li>
         </ul>
         <form className="d-flex" role="search">

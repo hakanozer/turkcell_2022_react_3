@@ -21,6 +21,7 @@ function Dashboard() {
 
   return (
     <>
+      <h2>Products</h2>
       <div className='mb-3 mt-3'>
         <input onChange={(evt) => setSearch(evt.target.value)} type='search' className='form-control' placeholder='Search..'></input>
       </div>

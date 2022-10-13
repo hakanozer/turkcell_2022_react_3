@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IBasket } from "./models/IBasket";
+import { IOrders } from "./models/IOrders";
 import { IProduct } from "./models/IProduct";
 import { IUser } from "./models/IUser";
 import { userLoginControl } from "./util";
@@ -44,6 +45,19 @@ export const addBasket = (productId:string) => {
             html: productId
        }
        return config.get<IBasket>('orderForm.php', { params: sendParam })
+    }
+    return null
+}
+
+// orders
+export const order = () => {
+    const user = userLoginControl()
+    if ( user ) {
+        const sendParams = {
+            musterilerID: user.userId,
+            rnd: Math.random()
+        }
+        return config.get<IOrders>('orderList.php', { params: sendParams })
     }
     return null
 }
