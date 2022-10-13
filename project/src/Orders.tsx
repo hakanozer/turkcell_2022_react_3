@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { Order } from './models/IOrders'
 import { order } from './service'
@@ -26,6 +27,10 @@ function Orders() {
     
   return (
     <>
+        <Helmet>
+            <title>Orders</title>
+            <meta name='description' content='Page Orders Content'></meta>
+        </Helmet>
         <h2>Orders</h2>
         <table className="table table-hover">
         <thead>
