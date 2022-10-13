@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ProBilgiler } from './models/IProduct'
-import { addBasket } from './service'
+import { addBasket, order } from './service'
+import { OrderAction } from './useRedux/actions/OrderAction'
+import { OrderType } from './useRedux/types/OrderType'
 
 function ProductDetail() {
   
@@ -24,7 +27,7 @@ function ProductDetail() {
     }
   }, [])
   
-  
+  const dispatch = useDispatch()
   const fncAddBasket = () => {
     const basket = addBasket(item!.productId)
     if ( basket ) {
@@ -32,6 +35,20 @@ function ProductDetail() {
             const status = res.data.order[0].durum
             if ( status ) {
                 toast.success('Add Basket Success')
+                const orderService = order()
+                if ( orderService ) {
+                    orderService.then( res => {
+                        const order = res.data.orderList
+                        if ( typeof order !== 'boolean' ) {
+                            const orderAction: OrderAction = {
+                                type: OrderType.ORDER_LIST,
+                                payload: order
+                            }
+                            dispatch( orderAction )
+                        }
+                    })
+                }
+                //window.location.reload()
             }else {
                 toast.error('Basket Fail')
             }

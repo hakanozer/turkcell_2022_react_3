@@ -8,10 +8,13 @@ export const OrderReducer = ( state: Order[] = [], action: OrderAction ) => {
     switch (action.type) {
 
         case OrderType.ORDER_ADD:
-        return action.payload
+            return action.payload
     
         case OrderType.ORDER_LIST:
             return action.payload
+
+        default:
+            return state
     }
 
 }

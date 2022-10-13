@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Bilgiler } from '../models/IUser'
+import { order } from '../service'
+import { OrderAction } from '../useRedux/actions/OrderAction'
+import { StateType } from '../useRedux/store'
+import { OrderType } from '../useRedux/types/OrderType'
 
 function NavBar( item: { user:Bilgiler } ) {
+
+  // use redux
+  const orderSelector = useSelector( (item:StateType) => item.OrderReducer )
+  const dispatch = useDispatch()
   
   const navigate = useNavigate()  
   const location = useLocation()
@@ -10,8 +19,30 @@ function NavBar( item: { user:Bilgiler } ) {
   const logout = () => {
     localStorage.removeItem('user')
     sessionStorage.removeItem('user')
-    navigate('/')
+    window.location.href = '/'
+    //navigate('/')
   }
+
+  // all orders
+  useEffect(() => {
+    const orderService = order()
+    if ( orderService ) {
+      orderService.then( res => {
+          const arr = res.data.orderList
+          if ( typeof arr !== 'boolean' ) {
+
+            const sendAction:OrderAction = {
+              type: OrderType.ORDER_LIST,
+              payload: arr
+            }
+            dispatch( sendAction )
+
+          }
+
+      })
+    }
+  }, [])
+  
     
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -43,7 +74,7 @@ function NavBar( item: { user:Bilgiler } ) {
             </ul>
             </li>
             <li className="nav-item">
-            <a className="nav-link disabled"> { item.user.userName } { item.user.userSurname } ( 0 ) </a>
+            <a className="nav-link disabled"> { item.user.userName } { item.user.userSurname } ( { orderSelector.length } ) </a>
             </li>
         </ul>
         <form className="d-flex" role="search">

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Order } from './models/IOrders'
 import { order } from './service'
+import { StateType } from './useRedux/store'
 
 function Orders() {
 
+    const orderSelector = useSelector( (item:StateType) => item.OrderReducer )
+
+    /*
     const [proArr, setProArr] = useState<Order[]>([])
     useEffect(() => {
         const orderPromise = order()
@@ -17,6 +22,7 @@ function Orders() {
             })
         }
     }, [])
+    */
     
   return (
     <>
@@ -33,7 +39,7 @@ function Orders() {
         </thead>
         <tbody>
 
-        {proArr.map( ( item, index ) => 
+        {orderSelector.map( ( item, index ) => 
             <tr key={index}>
                 <th scope="row"> { item.urun_id } </th>
                 <td> <img src={item.thumb} className='img-thumbnail'></img> </td>
