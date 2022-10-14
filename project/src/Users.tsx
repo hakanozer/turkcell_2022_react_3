@@ -1,10 +1,17 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import * as Yup from 'yup'
 import { IPerson } from './models/IPerson'
 
 function Users() {
+
+  // useRef
+  const nameRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    nameRef.current?.focus()
+  }, [])
+  
 
   // localStorge
   const [persons, setPersons] = useState<IPerson[]>([])
@@ -60,6 +67,7 @@ function Users() {
       values.name = ''
       values.email = ''
       values.phone = ''
+      nameRef.current?.focus()
     }
   })
 
@@ -74,7 +82,7 @@ function Users() {
           <h2>Person Add</h2>
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>
-              <input value={values.name} onChange={handleChange} name='name' className='form-control' placeholder='Name'></input>
+              <input ref={nameRef} value={values.name} onChange={handleChange} name='name' className='form-control' placeholder='Name'></input>
               { errors.name && <div className='text-danger'> { errors.name } </div> }
             </div>
             <div className='mb-3'>
