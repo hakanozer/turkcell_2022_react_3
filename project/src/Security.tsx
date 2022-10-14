@@ -10,10 +10,10 @@ function Security( item: { component: JSX.Element } ) {
     
     user === null
     ?
-    <Navigate to='/'></Navigate>
+      <Navigate to='/'></Navigate>
     :
     <>
-        <NavBar user={user} /> {item.component}
+      <NavBar user={user} /> {item.component}
     </>
 
   )

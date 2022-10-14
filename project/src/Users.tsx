@@ -1,7 +1,8 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import * as Yup from 'yup'
+import { DataContext } from './DataContext'
 import { IPerson } from './models/IPerson'
 
 function Users() {
@@ -71,6 +72,12 @@ function Users() {
     }
   })
 
+  const { getItem, setItem } = useContext(DataContext)
+  setItem({
+    title: 'Users',
+    color: '#000000'
+  })
+  
   return (
     <>
       <Helmet>
